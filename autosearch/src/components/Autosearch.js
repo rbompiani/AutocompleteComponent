@@ -6,9 +6,10 @@ class Autosearch extends React.Component {
         super(props);
         this.state = {
             query: '',
-            results: [],
+            suggestions: [],
             loading: false,
-            message: ''
+            message: '',
+            selected: ''
         }
 
         this.cancelToken = '';
@@ -35,14 +36,14 @@ class Autosearch extends React.Component {
             { cancelToken: this.cancelToken.token }
         ).then(res => {
             const noResultsMsg = !res.data.predictions.length ? "No locations match your search. Please try a new search" : "";
-            this.setState({ results: res.data.predictions, message: noResultsMsg, loading: false });
+            this.setState({ suggestions: res.data.predictions, message: noResultsMsg, loading: false });
         }).catch(err => {
-            this.setState({ isLoading: false, message: "Failed to retrieve data. Please try again" })
+            this.setState({ suggestions: [], isLoading: false, message: "Failed to retrieve data. Please try again" })
         })
     }
 
-    renderSearchResults = () => {
-
+    suggestionSelectHandler = (value) => {
+        this.setState({ query: value, suggestions: [] });
     }
 
     render() {
@@ -62,8 +63,8 @@ class Autosearch extends React.Component {
                     />
                 </label>
                 <ul>
-                    {this.state.results.map(res => {
-                        return (<li>{res.name}</li>);
+                    {this.state.suggestions.map(res => {
+                        return (<li onClick={() => this.suggestionSelectHandler(res.name)}>{res.name}</li>);
                     })}
                 </ul>
             </div >
