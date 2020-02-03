@@ -1,0 +1,28 @@
+.autosearch {
+    box-sizing: border-box;
+    width: 300px;
+    border: 1px solid grey;
+    box-shadow: 5px 5px 5px lightgray;
+}
+
+.autosearch input{
+    box-sizing: border-box;
+    width:100%;
+    border: none
+}
+
+.autosearch ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    border-top: 1px solid grey
+}
+
+.autosearch li {
+    padding: 5px;
+    cursor: pointer
+}
+
+.autosearch li:hover {
+    background-color: lightgray;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 
+import "./Autosearch.css";
+
 class Autosearch extends React.Component {
     constructor(props) {
         super(props);
@@ -51,22 +53,25 @@ class Autosearch extends React.Component {
         const { query } = this.state;
 
         return (
-            <div>
+            <div >
                 <h1>Autocomplete Search</h1>
-                <label className="search-label" htmlFor="search-input">
-                    <input
-                        type="text"
-                        id="search-input"
-                        value={query}
-                        placeholder="Search for a location..."
-                        onChange={this.handleInputChange}
-                    />
-                </label>
-                <ul>
-                    {this.state.suggestions.map(res => {
-                        return (<li onClick={() => this.suggestionSelectHandler(res.name)}>{res.name}</li>);
-                    })}
-                </ul>
+                <div className="autosearch">
+                    <label className="search-label" htmlFor="search-input">
+                        <input
+                            type="text"
+                            id="search-input"
+                            value={query}
+                            placeholder="Search for a location..."
+                            onChange={this.handleInputChange}
+                        />
+                    </label>
+                    <ul>
+                        {this.state.suggestions.map(res => {
+                            return (<li onClick={() => this.suggestionSelectHandler(res.name)}>{res.name}</li>);
+                        })}
+                    </ul>
+                </div>
+
             </div >
         )
     }
