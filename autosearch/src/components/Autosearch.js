@@ -11,7 +11,7 @@ class Autosearch extends React.Component {
             suggestions: [],
             loading: false,
             message: '',
-            selected: ''
+            activeSuggestion: 0
         }
 
         this.cancelToken = '';
@@ -19,9 +19,14 @@ class Autosearch extends React.Component {
 
     handleInputChange = e => {
         const query = e.target.value;
-        this.setState({ query: query, loading: true, message: "" }, () => {
-            this.fetchSearchResults(query);
-        });
+        this.setState(
+            {
+                query: query,
+                loading: true,
+                message: ""
+            },
+            () => { this.fetchSearchResults(query); }
+        );
     }
 
     fetchSearchResults = (query) => {
@@ -38,14 +43,47 @@ class Autosearch extends React.Component {
             { cancelToken: this.cancelToken.token }
         ).then(res => {
             const noResultsMsg = !res.data.predictions.length ? "No locations match your search. Please try a new search" : "";
-            this.setState({ suggestions: res.data.predictions, message: noResultsMsg, loading: false });
+            this.setState({
+                suggestions: res.data.predictions,
+                message: noResultsMsg,
+                loading: false,
+                activeSuggestion: 0
+            });
         }).catch(err => {
-            this.setState({ suggestions: [], isLoading: false, message: "Failed to retrieve data. Please try again" })
+            this.setState({
+                suggestions: [],
+                isLoading: false,
+                message: "Failed to retrieve data. Please try again",
+                activeSuggestion: 0
+            })
         })
     }
 
+    keyboardEventHandler = (e) => {
+
+        if (e.keyCode === 13) {
+            this.suggestionSelectHandler(this.state.suggestions[this.state.activeSuggestion].name)
+        } else if (e.keyCode === 38) {
+            if (this.state.activeSuggestion === 0) {
+                return;
+            }
+            this.setState({ activeSuggestion: this.state.activeSuggestion - 1 });
+        } else if (e.keyCode === 40) {
+            if (this.state.activeSuggestion === this.state.suggestions.length - 1) {
+                return;
+            }
+            this.setState({ activeSuggestion: this.state.activeSuggestion + 1 })
+        }
+    }
+
+
     suggestionSelectHandler = (value) => {
-        this.setState({ query: value, suggestions: [] });
+        this.setState({
+            query: value,
+            suggestions: [],
+            loading: false, message: '',
+            activeSuggestion: 0
+        });
     }
 
     render() {
@@ -63,11 +101,20 @@ class Autosearch extends React.Component {
                             value={query}
                             placeholder="Search for a location..."
                             onChange={this.handleInputChange}
+                            onKeyDown={this.keyboardEventHandler}
                         />
                     </label>
                     <ul>
-                        {this.state.suggestions.map(res => {
-                            return (<li onClick={() => this.suggestionSelectHandler(res.name)}>{res.name}</li>);
+                        {this.state.suggestions.map((res, index) => {
+                            let className = "";
+                            if (index === this.state.activeSuggestion) {
+                                className = "activeSuggestion"
+                            }
+                            return (
+                                <li
+                                    onClick={() => this.suggestionSelectHandler(res.name)}
+                                    className={className}
+                                >{res.name}</li>);
                         })}
                     </ul>
                 </div>

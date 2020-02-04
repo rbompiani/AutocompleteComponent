@@ -25,4 +25,10 @@
 
 .autosearch li:hover {
     background-color: lightgray;
+    font-weight: bold;
+}
+
+.autosearch .activeSuggestion {
+    background-color: lightgray;
+    font-weight: bold;
 }
