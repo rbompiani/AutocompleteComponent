@@ -61,7 +61,7 @@ class Autosearch extends React.Component {
 
     keyboardEventHandler = (e) => {
 
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 && this.state.suggestions.length) {
             this.suggestionSelectHandler(this.state.suggestions[this.state.activeSuggestion].name)
         } else if (e.keyCode === 38) {
             if (this.state.activeSuggestion === 0) {
