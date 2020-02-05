@@ -8,6 +8,8 @@ import "./citysearch.css";
 class Autosearch extends React.Component {
     constructor(props) {
         super(props);
+
+        // create state object w/ autocomplete props
         this.state = {
             query: '',
             suggestions: [],
@@ -16,30 +18,38 @@ class Autosearch extends React.Component {
             activeSuggestion: 0
         }
 
+        // create cancel token property to abort axios calls
         this.cancelToken = '';
     }
 
+    // ----- HANDLE INPUT CHANGE ----- //
     handleInputChange = e => {
         const query = e.target.value;
+        // update state with input value
         this.setState(
             {
                 query: query,
                 loading: true,
                 message: ""
             },
+            // callback to ensure axios search fires after state is updated
             () => { this.fetchSearchResults(query); }
         );
     }
 
+    // ----- MAKE AXIOS SEARCH CALL ----- //
     fetchSearchResults = (query) => {
         const queryUrl = `https://coding-challenge.echoandapex.com/locations?q=${query}`
 
+        // if a previous search is in progress, cancel it (limit calls from successive letter inputs)
         if (this.cancelToken) {
             this.cancelToken.cancel();
         }
 
+        // create an axios cancel token for the current request
         this.cancelToken = axios.CancelToken.source();
 
+        // make axios request
         axios.get(
             queryUrl,
             { cancelToken: this.cancelToken.token }
@@ -61,24 +71,31 @@ class Autosearch extends React.Component {
         })
     }
 
+    // ----- HANDLE KEYBOARD NAVIGATION FOR PREDICTIONS ----- //
     keyboardEventHandler = (e) => {
-
+        // if there are suggestions available and ENTER is pressed, choose the active suggestion
         if (e.keyCode === 13 && this.state.suggestions.length) {
             this.suggestionSelectHandler(this.state.suggestions[this.state.activeSuggestion].name)
+            // if the UP arrow is pressed...
         } else if (e.keyCode === 38) {
+            //...and you're at the top of the list, ignore
             if (this.state.activeSuggestion === 0) {
                 return;
             }
+            //...otherwise, move the active selection up
             this.setState({ activeSuggestion: this.state.activeSuggestion - 1 });
+            // if the DOWN arrow is pressed...
         } else if (e.keyCode === 40) {
+            //...and you're at the bottom of the list, ignore
             if (this.state.activeSuggestion === this.state.suggestions.length - 1) {
                 return;
             }
+            //...otherwise, move the active selection down
             this.setState({ activeSuggestion: this.state.activeSuggestion + 1 })
         }
     }
 
-
+    // ----- CHOOSE A PREDICTION ----- //
     suggestionSelectHandler = (value) => {
         this.setState({
             query: value,
