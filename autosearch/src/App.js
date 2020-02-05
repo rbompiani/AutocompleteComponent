@@ -9,7 +9,7 @@ import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="searchWrapper">
       <Autosearch class="flora" />
       <Autosearch class="city" />
     </div>
