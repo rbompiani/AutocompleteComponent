@@ -1,26 +1,32 @@
 .autosearch {
     box-sizing: border-box;
-    width: 300px;
-    border: 1px solid grey;
-    box-shadow: 5px 5px 5px lightgray;
+    display: inline-block;
+    margin: 30px;
+}
+
+.autosearch .banner{
+    box-sizing: border-box;
+    background-size: cover;
+    height:75px;
+    width:100%
 }
 
 .autosearch input{
     box-sizing: border-box;
     width:100%;
-    border: none
+    padding: 10px
 }
 
 .autosearch ul{
     list-style-type: none;
     margin: 0px;
-    padding: 0px;
-    border-top: 1px solid grey
+    padding: 0px
 }
 
 .autosearch li {
     padding: 5px;
-    cursor: pointer
+    cursor: pointer;
+    padding: 10px
 }
 
 .autosearch li:hover {

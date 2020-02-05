@@ -1,0 +1,9 @@
+.florasearch {
+    box-sizing: border-box;
+    width: 300px;
+    border: 1px solid grey;
+    box-shadow: 5px 5px 5px lightgray;
+    margin: 30px;
+    font-family: 'Dancing Script', cursive;
+}
+

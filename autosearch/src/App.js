@@ -9,7 +9,11 @@ import './App.css';
 
 function App() {
   return (
-    <Autosearch />
+    <div>
+      <Autosearch class="flora" />
+      <Autosearch class="city" />
+    </div>
+
   );
 }
 

@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 
 import "./Autosearch.css";
+import "./florasearch.css";
+import "./citysearch.css";
 
 class Autosearch extends React.Component {
     constructor(props) {
@@ -91,9 +93,9 @@ class Autosearch extends React.Component {
         const { query } = this.state;
 
         return (
-            <div >
-                <h1>Autocomplete Search</h1>
-                <div className="autosearch">
+            <div class="autosearch">
+                <div className={this.props.class + "search"}>
+                    <div className="banner" style={{ backgroundImage: `url(${this.props.class}.jpg)` }}></div>
                     <label className="search-label" htmlFor="search-input">
                         <input
                             type="text"

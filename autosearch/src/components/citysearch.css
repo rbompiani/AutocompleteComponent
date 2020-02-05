@@ -1,0 +1,27 @@
+.citysearch {
+    box-sizing: border-box;
+    width: 300px;
+    border: 5px solid black;
+    box-shadow: 5px 5px 5px lightgray;
+    margin: 30px;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 25px;
+}
+
+.citysearch .banner {
+    border-radius: 20px 20px 0px 0px;
+}
+
+.citysearch input{
+    border-radius: 0px 0px 25px 25px;
+    border-width: 0px;
+}
+
+.citysearch ul:last-child {
+    border-radius: 0px 0px 25px 25px;
+    border-width: 0px;    
+}
+
+.citysearch li:last-child:hover {
+    border-radius: 0px 0px 20px 20px;
+}
