@@ -117,7 +117,7 @@ class Autosearch extends React.Component {
                                     key={index}
                                     onClick={() => this.suggestionSelectHandler(res.name)}
                                     className={className}
-                                >{res.name}</li>);
+                                >{res.name} <br /> {res.description}</li>);
                         })}
                     </ul>
                 </div>
